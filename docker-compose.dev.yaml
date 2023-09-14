@@ -1,0 +1,22 @@
+version: '3'
+services:
+  frontend:
+    env_file: ./.env.dev
+    build:
+      target: dev-stage
+    volumes:
+      - type: bind
+        source: .
+        target: /app
+    command: npm run dev
+  backend:
+    env_file: ./.env.dev
+    build:
+      target: dev-stage
+    volumes:
+      - type: bind
+        source: .
+        target: /app
+    command: python -m gunicorn --bind 0.0.0.0:8000 --reload base.wsgi:application
+  db:
+    env_file: ./.env.dev
